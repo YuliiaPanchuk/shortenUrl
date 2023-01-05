@@ -29,9 +29,7 @@ export function App() {
   useEffect(() => {
     fetchLinks();
 
-    return function () {
-      // unmount
-    };
+    return function () {};
   }, []);
 
   // Delete all links
