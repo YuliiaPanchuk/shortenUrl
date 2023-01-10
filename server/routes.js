@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 const baseUrl = 'http://localhost:3001';
 
 // Create shorten url
-app.post('/create', async (request, response) => {
+app.post('/shorten_url', async (request, response) => {
   const long_url = request.body.long_url;
 
   // Validate inputs
@@ -40,8 +40,9 @@ app.post('/create', async (request, response) => {
 
     // Respond to client
     response.status(200).json({
-      long_url: long_url,
+      long_url: result.long_url,
       id: result._id,
+      url: `${baseUrl}/r/${result._id}`,
     });
   } catch (error) {
     console.log(error);

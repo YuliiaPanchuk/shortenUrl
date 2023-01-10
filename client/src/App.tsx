@@ -14,15 +14,15 @@ export function App() {
   };
 
   function fetchLinks() {
-    fetch('http://localhost:3001/list', {
-      method: 'POST',
+    fetch('http://localhost:3001/links', {
+      method: 'GET',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
     })
-      .then((res) => res.json())
+      .then((response) => response.json())
       .then((data) => {
-        setList(data.items);
+        setList(data.result);
       });
   }
 
@@ -34,7 +34,7 @@ export function App() {
 
   // Delete all links
   function handleDelete() {
-    fetch('http://localhost:3001/delete', {
+    fetch('http://localhost:3001/clear', {
       method: 'DELETE',
     }).then(fetchLinks);
   }
@@ -42,7 +42,7 @@ export function App() {
   function createShortLink() {
     setIsLoading(true);
 
-    fetch('http://localhost:3001/create', {
+    fetch('http://localhost:3001/shorten_url', {
       method: 'POST',
       body: JSON.stringify({
         long_url: longLink,
@@ -51,8 +51,8 @@ export function App() {
         'Content-type': 'application/json; charset=UTF-8',
       },
     })
-      .then((res) => {
-        return res.json();
+      .then((response) => {
+        return response.json();
       })
       .then((data) => {
         setShortLink(data.url);
