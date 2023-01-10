@@ -134,7 +134,3 @@ app.get('/r/:id', (req, res) => {
     res.status(404);
   });
 });
-
-app.listen(PORT, () => {
-  console.log(`Assignment project listening on port ${PORT}`);
-});

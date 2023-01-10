@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LinkRow } from './LinkRow';
+import { LinkRow } from './components/LinkRow';
 import './App.css';
 
 export function App() {
