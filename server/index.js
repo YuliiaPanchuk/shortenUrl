@@ -69,7 +69,7 @@ app.post('/create', (req, res) => {
     } else {
       res.json({
         long_url,
-        url: `${baseUrl}/r/${uniqueID}`,
+        url: `${baseUrl}/${uniqueID}`,
       });
     }
   });
@@ -86,7 +86,7 @@ app.post('/list', (_req, res) => {
       console.log('Error:', err);
     } else {
       res.json({
-        items: result.map((item) => ({ ...item, short_url: `${baseUrl}/r/${item.short_url_id}` })),
+        items: result.map((item) => ({ ...item, short_url: `${baseUrl}/${item.short_url_id}` })),
       });
     }
   });

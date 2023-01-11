@@ -12,6 +12,7 @@ export function LinkRow({ list, onDelete }: LinkRowProps) {
       <button onClick={onDelete} className="clear_button">
         Clear
       </button>
+
       {list.map((item, index) => (
         <table className="list_urls" key={index}>
           <thead>

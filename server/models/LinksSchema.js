@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const LinksSchema = new mongoose.Schema({
   _id: {
     type: String,
-    required: true,
+    //required: true,
   },
   long_url: {
     type: String,
@@ -14,11 +14,11 @@ const LinksSchema = new mongoose.Schema({
   },
   created_at: {
     type: Date,
-    required: true
+    // required: true
   },
   count: {
     type: Number,
-    required: true
+    // required: true
   }
 })
 
