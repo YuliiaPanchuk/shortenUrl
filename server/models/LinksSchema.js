@@ -3,18 +3,19 @@ const mongoose = require("mongoose")
 const LinksSchema = new mongoose.Schema({
   _id: {
     type: String,
-    //required: true,
+    required: true,
   },
   long_url: {
     type: String,
     required: true,
   },
   short_url: {
-    type: String
+    type: String,
+    // required: true
   },
   created_at: {
     type: Date,
-    // required: true
+    //  required: true
   },
   count: {
     type: Number,
