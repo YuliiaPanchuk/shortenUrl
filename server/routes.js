@@ -3,13 +3,32 @@ const app = express();
 const { Links } = require('./models/LinksSchema');
 const { v4: uuidv4 } = require('uuid');
 
-const baseUrl = 'http://localhost:3001';
+const baseUrl = 'http://localhost:3001'; // environment variable
+
+function dateTime(date = new Date()) {
+  const pad = function (num) {
+    return ('00' + num).slice(-2);
+  };
+
+  return (
+    date.getUTCFullYear() +
+    '-' +
+    pad(date.getUTCMonth() + 1) +
+    '-' +
+    pad(date.getUTCDate()) +
+    ' ' +
+    pad(date.getUTCHours()) +
+    ':' +
+    pad(date.getUTCMinutes()) +
+    ':' +
+    pad(date.getUTCSeconds())
+  );
+}
 
 // Create shorten url
 app.post('/shorten_url', async (request, response) => {
-  let long_url = request.body.long_url;
 
-  // Validate inputs
+  let long_url = request.body.long_url;
   if (!long_url) {
     response.status(400).json({
       status: '!OK',
@@ -28,9 +47,10 @@ app.post('/shorten_url', async (request, response) => {
 
   try {
     // Create record
-    const result = await Links({
+    const result = await Links.create({
       long_url,
       _id: uuidv4(),
+      created_at: dateTime()
     });
 
     // Respond to client
@@ -38,6 +58,7 @@ app.post('/shorten_url', async (request, response) => {
       long_url: long_url,
       id: result._id,
       url: `${baseUrl}/r/${result._id}`,
+      created_at: result.created_at
     });
   } catch (error) {
     console.log(error);
@@ -59,23 +80,31 @@ app.get('/links', async (_request, response) => {
 
   response.status(200).json({
     result: links.map((link) => ({
-      link: { ...link, short_url: `${baseUrl}/${link._id}` }
+      long_url: link.long_url,
+      short_url: `${baseUrl}/r/${link._id}`,
+      created_at: dateTime()
     })),
   });
 });
 
 // Show links by given id
 app.get('/r/:id', async (request, response) => {
-  const id = request.params.id
-  const link = await Links.findById(id);
-  let long_url = link.long_url
 
+  const id = request.params.id
   if (!id) {
     response.status(404).send();
     return;
   }
 
-  if (!long_url.startsWith('http://')) {
+  const link = await Links.findById({ _id: id });
+  if (!link) {
+    response.status(404).send();
+    return;
+  }
+
+
+  let long_url = link.long_url
+  if (!long_url.startsWith('http')) {
     long_url = 'http://' + long_url;
   }
 
