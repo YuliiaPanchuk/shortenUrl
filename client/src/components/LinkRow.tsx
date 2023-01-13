@@ -1,8 +1,9 @@
 import React from 'react';
+import { Links } from '../types';
 import { QrCode } from './QrCode';
 
 interface LinkRowProps {
-  list: any[];
+  list: Links[];
   onDelete: () => void;
 }
 

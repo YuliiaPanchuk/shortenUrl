@@ -50,7 +50,7 @@ app.post('/shorten_url', async (request, response) => {
     const result = await Links.create({
       long_url,
       _id: uuidv4(),
-      created_at: dateTime()
+      created_at: dateTime(),
     });
 
     // Respond to client
@@ -58,7 +58,7 @@ app.post('/shorten_url', async (request, response) => {
       long_url: long_url,
       id: result._id,
       url: `${baseUrl}/r/${result._id}`,
-      created_at: result.created_at
+      created_at: result.created_at,
     });
   } catch (error) {
     console.log(error);
