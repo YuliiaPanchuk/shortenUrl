@@ -10,10 +10,12 @@ export function QrCode({ text }: QrCodeProps) {
 
   useEffect(() => {
     if (canvas.current) {
-      // CHECK IT
-      QR.toCanvas(canvas.current, text || 'It works ', (error) => {
-        if (error) console.error(error);
-        console.log('success!');
+      QR.toCanvas(canvas.current, text || 'It works ', {
+        width: 80,
+        color: {
+          dark: '#1b67ad',
+          light: '#ffffff54',
+        },
       });
     }
   }, [canvas, text]);
