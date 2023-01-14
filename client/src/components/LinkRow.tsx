@@ -1,47 +1,47 @@
 import React from 'react';
-import { Links } from '../types';
+import { Box, Button, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { QrCode } from './QrCode';
+import { useLinkContext } from '../context/LinkContext';
 
-interface LinkRowProps {
-  list: Links[];
-  onDelete: () => void;
-}
+export function LinkRow() {
+  const { links, clearAll } = useLinkContext();
 
-export function LinkRow({ list, onDelete }: LinkRowProps) {
   return (
-    <div className="list">
-      <button onClick={onDelete} className="clear_button">
+    <Box>
+      <Button onClick={clearAll} variant="outline" colorScheme="blue" marginBottom={2}>
         Clear
-      </button>
+      </Button>
 
-      {list.map((item, index) => (
-        <table className="list_urls" key={index}>
-          <thead>
-            <tr>
-              <th>Long url</th>
-              <th>Shorten url</th>
-              <th>Clicked</th>
-              <th>Created at</th>
-              <th>QrCode</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{item.long_url}</td>
-              <td>
-                <a href={item.short_url} target="_blank" rel="noreferrer">
-                  {item.short_url}
-                </a>
-              </td>
-              <td>{item.count}</td>
-              <td>{new Date(item.created_at).toLocaleString()}</td>
-              <td>
-                <QrCode text={item.short_url} />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      {links.map((item, index) => (
+        <TableContainer key={index}>
+          <Table variant="simple" colorScheme="blue">
+            <Thead>
+              <Tr>
+                <Th>Long url</Th>
+                <Th>Shorten url</Th>
+                <Th isNumeric>Clicked</Th>
+                <Th>Created at</Th>
+                <Th>QrCode</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Td>{item.long_url}</Td>
+                <Td>
+                  <a href={item.short_url} target="_blank" rel="noreferrer">
+                    {item.short_url}
+                  </a>
+                </Td>
+                <Td>{item.count}</Td>
+                <Td>{new Date(item.created_at).toLocaleString()}</Td>
+                <Td>
+                  <QrCode text={item.short_url} />
+                </Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        </TableContainer>
       ))}
-    </div>
+    </Box>
   );
 }
