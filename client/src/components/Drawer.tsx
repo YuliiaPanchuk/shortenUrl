@@ -7,6 +7,7 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
+  Flex,
   useDisclosure,
 } from '@chakra-ui/react';
 import { LinkRow } from './LinkRow';
@@ -21,7 +22,7 @@ export function LinkDrawer() {
   };
 
   return (
-    <>
+    <Flex justify="center">
       <Button onClick={() => handleClick(size)} m={4}>
         {'History'}
       </Button>
@@ -30,12 +31,12 @@ export function LinkDrawer() {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>{'History'}</DrawerHeader>
+          <DrawerHeader>History</DrawerHeader>
           <DrawerBody>
             <LinkRow />
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-    </>
+    </Flex>
   );
 }
