@@ -1,12 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Links } from '../types';
 
-export const LinkContext = React.createContext<{
+const LinkContext = React.createContext<{
   links: Links[];
   fetchLinks: () => void;
+  clearAll: () => void;
 }>({
   links: [],
   fetchLinks: function (): void {
+    throw new Error('Function not implemented.');
+  },
+  clearAll: function (): void {
     throw new Error('Function not implemented.');
   },
 });
@@ -34,11 +38,18 @@ export function LinkProvider({ children }: any) {
     fetchLinks();
   }, [fetchLinks]);
 
+  const clearAll = () => {
+    fetch('http://localhost:3001/clear', {
+      method: 'DELETE',
+    }).then(fetchLinks);
+  };
+
   return (
     <LinkContext.Provider
       value={{
         links,
         fetchLinks,
+        clearAll,
       }}
     >
       {children}
