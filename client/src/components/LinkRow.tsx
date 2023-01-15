@@ -1,7 +1,19 @@
 import React from 'react';
-import { Box, Button, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Link,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@chakra-ui/react';
 import { QrCode } from './QrCode';
 import { useLinkContext } from '../context/LinkContext';
+import '../styles.css';
 
 export function LinkRow() {
   const { links, clearAll } = useLinkContext();
@@ -14,12 +26,12 @@ export function LinkRow() {
 
       {links.map((item, index) => (
         <TableContainer key={index}>
-          <Table variant="simple" colorScheme="blue">
+          <Table className="table" variant="simple" colorScheme="blue" size="xs">
             <Thead>
               <Tr>
                 <Th>Long url</Th>
                 <Th>Shorten url</Th>
-                <Th isNumeric>Clicked</Th>
+                <Th>Clicked</Th>
                 <Th>Created at</Th>
                 <Th>QrCode</Th>
               </Tr>
@@ -28,9 +40,9 @@ export function LinkRow() {
               <Tr>
                 <Td>{item.long_url}</Td>
                 <Td>
-                  <a href={item.short_url} target="_blank" rel="noreferrer">
+                  <Link isExternal href={item.short_url}>
                     {item.short_url}
-                  </a>
+                  </Link>
                 </Td>
                 <Td>{item.count}</Td>
                 <Td>{new Date(item.created_at).toLocaleString()}</Td>
