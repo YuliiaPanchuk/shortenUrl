@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose');
 
 const LinksSchema = new mongoose.Schema({
   _id: {
@@ -17,9 +17,9 @@ const LinksSchema = new mongoose.Schema({
   },
   count: {
     type: Number,
-  }
-})
+  },
+});
 
-const Links = mongoose.model('Link', LinksSchema)
+const Links = mongoose.model('Link', LinksSchema);
 
-module.exports = { Links }
+module.exports = { Links };
