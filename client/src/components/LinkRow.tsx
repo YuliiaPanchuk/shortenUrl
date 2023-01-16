@@ -16,7 +16,7 @@ import { useLinkContext } from '../context/LinkContext';
 import '../styles.css';
 
 export function LinkRow() {
-  const { links, clearAll } = useLinkContext();
+  const { links, clearAll, fetchLinks } = useLinkContext();
 
   return (
     <Box>
@@ -40,11 +40,15 @@ export function LinkRow() {
               <Tr>
                 <Td>{item.long_url}</Td>
                 <Td>
-                  <Link isExternal href={item.short_url}>
+                  <Link
+                    isExternal
+                    href={item.short_url}
+                    onClick={() => setTimeout(fetchLinks, 500)}
+                  >
                     {item.short_url}
                   </Link>
                 </Td>
-                <Td>{item.count}</Td>
+                <Td>{item.clicked}</Td>
                 <Td>{new Date(item.created_at).toLocaleString()}</Td>
                 <Td>
                   <QrCode text={item.short_url} />

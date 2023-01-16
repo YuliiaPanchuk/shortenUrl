@@ -80,9 +80,11 @@ app.get('/links', async (_request, response) => {
 
   response.status(200).json({
     result: links.map((link) => ({
+      id: link._id,
       long_url: link.long_url,
       short_url: `${baseUrl}/r/${link._id}`,
-      created_at: dateTime()
+      clicked: link.count || 0,
+      created_at: dateTime(link.created_at)
     })),
   });
 });
@@ -96,12 +98,16 @@ app.get('/r/:id', async (request, response) => {
     return;
   }
 
-  const link = await Links.findById({ _id: id });
+  const link = await Links.findOneAndUpdate({ _id: id }, {
+    $inc: {
+      count: 1
+    }
+  });
+
   if (!link) {
     response.status(404).send();
     return;
   }
-
 
   let long_url = link.long_url
   if (!long_url.startsWith('http')) {
