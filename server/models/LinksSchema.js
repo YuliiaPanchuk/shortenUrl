@@ -11,15 +11,12 @@ const LinksSchema = new mongoose.Schema({
   },
   short_url: {
     type: String,
-    // required: true
   },
   created_at: {
     type: Date,
-    //  required: true
   },
   count: {
     type: Number,
-    // required: true
   }
 })
 
