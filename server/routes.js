@@ -27,16 +27,7 @@ function dateTime(date = new Date()) {
 
 // Create shorten url
 app.post('/shorten_url', async (request, response) => {
-
   let long_url = request.body.long_url;
-  if (!long_url) {
-    response.status(400).json({
-      status: '!OK',
-      message: 'Something went wrong',
-    });
-    return;
-  }
-
   if (long_url === '' || typeof long_url !== 'string') {
     response.status(400).json({
       error: 'Input cannot be empty',
@@ -44,6 +35,16 @@ app.post('/shorten_url', async (request, response) => {
     alert('Input cannot be empty');
     return;
   }
+
+  /*
+  if (!long_url) {
+      response.status(400).json({
+        status: '!OK',
+        message: 'Something went wrong',
+      });
+      return;
+    }
+  */
 
   try {
     // Create record
@@ -84,44 +85,46 @@ app.get('/links', async (_request, response) => {
       long_url: link.long_url,
       short_url: `${baseUrl}/r/${link._id}`,
       clicked: link.count || 0,
-      created_at: dateTime(link.created_at)
+      created_at: dateTime(link.created_at),
     })),
   });
 });
 
 // Show links by given id
 app.get('/r/:id', async (request, response) => {
-
-  const id = request.params.id
+  const id = request.params.id;
   if (!id) {
     response.status(404).send();
     return;
   }
 
-  const link = await Links.findOneAndUpdate({ _id: id }, {
-    $inc: {
-      count: 1
-    }
-  });
+  const link = await Links.findOneAndUpdate(
+    { _id: id },
+    {
+      $inc: {
+        count: 1,
+      },
+    },
+  );
 
   if (!link) {
-    response.status(404).send();
+    response.status(404).json();
     return;
   }
 
-  let long_url = link.long_url
+  let long_url = link.long_url;
   if (!long_url.startsWith('http')) {
     long_url = 'http://' + long_url;
   }
 
-  response.redirect(long_url)
-})
+  response.redirect(long_url);
+});
 
-// Clear all shorten and long urls
+// Clear all content
 app.delete('/clear', async (_request, response) => {
   await Links.deleteMany();
 
-  response.status(200).send();
+  response.status(200).json();
   console.log('Deleted all links');
 });
 
@@ -130,7 +133,7 @@ app.delete('/clear/:id', async (request, response) => {
   const id = request.params.id;
 
   if (!id) {
-    response.status(404).send();
+    response.status(404).json();
     return;
   }
 
