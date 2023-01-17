@@ -36,16 +36,6 @@ app.post('/shorten_url', async (request, response) => {
     return;
   }
 
-  /*
-  if (!long_url) {
-      response.status(400).json({
-        status: '!OK',
-        message: 'Something went wrong',
-      });
-      return;
-    }
-  */
-
   try {
     // Create record
     const result = await Links.create({
