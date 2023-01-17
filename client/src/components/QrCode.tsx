@@ -13,7 +13,7 @@ export function QrCode({ text }: QrCodeProps) {
       QR.toCanvas(canvas.current, text || 'It works ', {
         width: 80,
         color: {
-          dark: '#1b67ad',
+          dark: '#00758d',
           light: '#ffffff54',
         },
       });

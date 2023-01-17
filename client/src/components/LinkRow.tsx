@@ -26,7 +26,7 @@ export function LinkRow() {
 
       {links.map((item, index) => (
         <TableContainer key={index}>
-          <Table className="table" variant="simple" colorScheme="blue" size="xs">
+          <Table className="table" variant="simple" colorScheme="blue" size="sm" marginY={6}>
             <Thead>
               <Tr>
                 <Th>Long url</Th>
@@ -50,7 +50,7 @@ export function LinkRow() {
                 </Td>
                 <Td>{item.clicked}</Td>
                 <Td>{new Date(item.created_at).toLocaleString()}</Td>
-                <Td>
+                <Td className="qr">
                   <QrCode text={item.short_url} />
                 </Td>
               </Tr>
