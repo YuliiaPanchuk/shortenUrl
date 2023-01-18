@@ -23,7 +23,7 @@ export function LinkDrawer() {
 
   return (
     <Flex justify="center">
-      <Button onClick={() => handleClick(size)} m={4} size={{ base: 'md', md: 'md' }}>
+      <Button onClick={() => handleClick(size)} m={2} size={{ base: 'md', md: 'md' }}>
         {'History'}
       </Button>
 

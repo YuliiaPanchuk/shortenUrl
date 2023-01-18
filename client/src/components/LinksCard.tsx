@@ -5,7 +5,6 @@ import {
   Flex,
   FormControl,
   FormErrorMessage,
-  FormHelperText,
   FormLabel,
   Grid,
   GridItem,
@@ -106,7 +105,6 @@ export function LinksCard() {
                 onChange={(e) => setLongLink(e.target.value)}
               />
               {isValidUrl(longLink) || <FormErrorMessage>Please enter valid url</FormErrorMessage>}
-
               <Button
                 colorScheme="blue"
                 onClick={createShortLink}
