@@ -30,7 +30,7 @@ export function LinksCard() {
   function createShortLink() {
     setIsLoading(true);
 
-    fetch('http://localhost:3001/shorten_url', {
+    fetch(`${process.env.REACT_APP_API_HOST}/shorten_url`, {
       method: 'POST',
       body: JSON.stringify({
         long_url: longLink,
@@ -109,7 +109,6 @@ export function LinksCard() {
                 placeholder="http://url.com"
                 value={longLink}
                 onChange={(e) => setLongLink(e.target.value)}
-                // onBlur={validateUrl}
               />
               {isValidUrl(longLink) ? (
                 <FormHelperText>Enter long url</FormHelperText>

@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(cors());
 
 const PORT = 3001;
-const baseUrl = 'http://localhost:3001';
+const baseUrl = `${process.env.REACT_APP_API_HOST}`;
 
 const con = mysql.createConnection({
   host: 'localhost',

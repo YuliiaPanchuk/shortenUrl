@@ -3,7 +3,7 @@ const app = express();
 const { Links } = require('./models/LinksSchema');
 const { v4: uuidv4 } = require('uuid');
 
-const baseUrl = 'http://localhost:3001'; // environment variable
+const baseUrl = `${process.env.REACT_APP_API_HOST}`; // environment variable
 
 function dateTime(date = new Date()) {
   const pad = function (num) {

@@ -19,7 +19,7 @@ export function LinkProvider({ children }: any) {
   const [links, setLinks] = useState<Links[]>([]);
 
   const fetchLinks = useCallback(() => {
-    fetch('http://localhost:3001/links', {
+    fetch(`${process.env.REACT_APP_API_HOST}/links`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -39,7 +39,7 @@ export function LinkProvider({ children }: any) {
   }, [fetchLinks]);
 
   const clearAll = () => {
-    fetch('http://localhost:3001/clear', {
+    fetch(`${process.env.REACT_APP_API_HOST}/clear`, {
       method: 'DELETE',
     }).then(fetchLinks);
   };
