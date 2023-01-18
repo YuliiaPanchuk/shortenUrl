@@ -33,7 +33,7 @@ export function LinkRow() {
                 <Th>Shorten url</Th>
                 <Th>Clicked</Th>
                 <Th>Created at</Th>
-                <Th>QrCode</Th>
+                <Th display={{ base: 'none', md: 'flex' }}>QrCode</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -50,7 +50,7 @@ export function LinkRow() {
                 </Td>
                 <Td>{item.clicked}</Td>
                 <Td>{new Date(item.created_at).toLocaleString()}</Td>
-                <Td className="qr">
+                <Td className="qr" display={{ base: 'none', md: 'flex' }}>
                   <QrCode text={item.short_url} />
                 </Td>
               </Tr>

@@ -2,22 +2,23 @@ import React, { useState } from 'react';
 import {
   Box,
   Button,
-  Container,
   Flex,
+  FormControl,
+  FormErrorMessage,
+  FormHelperText,
+  FormLabel,
   Grid,
   GridItem,
   Image,
   Input,
   Link,
   Stack,
-  Text,
   useClipboard,
-  VStack,
 } from '@chakra-ui/react';
 import { useLinkContext } from '../context/LinkContext';
-import { ExternalLinkIcon } from '@chakra-ui/icons';
-import RobotImg from '../images/robot.png';
+import { CopyIcon, ExternalLinkIcon, LinkIcon } from '@chakra-ui/icons';
 import { LinkDrawer } from './Drawer';
+import RobotImg from '../images/robot.png';
 
 export function LinksCard() {
   const { fetchLinks } = useLinkContext();
@@ -51,34 +52,91 @@ export function LinksCard() {
       });
   }
 
+  const isValidUrl = (urlString: string) => {
+    const urlPattern = new RegExp(
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // validate domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // validate OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // validate port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // validate query string
+        '(\\#[-a-z\\d_]*)?$',
+      'i',
+    );
+    return !!urlPattern.test(urlString);
+  };
+
+  function validateUrl() {
+    if (!isValidUrl(longLink)) {
+      alert('Please provide valid link');
+    }
+  }
+
   return (
-    <Grid h="100vh" templateRows="repeat(2, 1fr)" templateColumns="repeat(2, 1fr)">
-      <GridItem colStart={1} rowStart={1} display="flex" justifyContent="center">
+    <Grid
+      h="100vh"
+      templateAreas={{
+        base: "'Form' 'Robot'",
+        md: "'Form Icon' '. Robot'",
+      }}
+      templateRows={{
+        base: 'repeat(2, 1fr)',
+        md: 'repeat(2, 1fr)',
+      }}
+      templateColumns={{
+        base: 'repeat(1, 1fr)',
+        md: 'repeat(2, 1fr)',
+      }}
+      alignItems="center"
+      justifyItems="center"
+      background="linear-gradient(345deg,#ffffff 0%,#ffffff calc(50% - 1px), #008996 calc(50% + 1px), #008996 100%)"
+    >
+      <GridItem gridArea="Form" display="flex" justifyContent="center">
         <Flex justify="center" align="center" flexDirection="column" minWidth="md">
-          <Box paddingX={10} paddingY={6} maxW="lg" minW="md" borderWidth="1px" borderRadius="lg">
-            <Stack>
-              <Text>Enter a long url</Text>
+          <Box
+            paddingX={10}
+            paddingY={6}
+            width={{ base: 'xs', md: 'md' }}
+            borderWidth="1px"
+            borderRadius="lg"
+            border="1px solid white"
+            backgroundColor="white"
+          >
+            <FormControl isInvalid={!isValidUrl(longLink)}>
+              <FormLabel fontSize="xl">Enter a long url</FormLabel>
               <Input
                 type="text"
                 size="md"
                 variant="outline"
-                placeholder="http://website.com"
+                placeholder="http://url.com"
                 value={longLink}
                 onChange={(e) => setLongLink(e.target.value)}
+                // onBlur={validateUrl}
               />
-              <Button colorScheme="blue" onClick={createShortLink}>
+              {isValidUrl(longLink) ? (
+                <FormHelperText>Enter long url</FormHelperText>
+              ) : (
+                <FormErrorMessage>Please enter valid url</FormErrorMessage>
+              )}
+
+              <Button
+                colorScheme="blue"
+                onClick={createShortLink}
+                size="lg"
+                marginTop={2}
+                isDisabled={isValidUrl(longLink) ? false : true}
+              >
                 Submit
               </Button>
-            </Stack>
+            </FormControl>
 
             {Boolean(shortLink) && (
-              <Box marginTop={10}>
-                <Text>Shorted link: </Text>
-                <VStack marginY={2}>
+              <FormControl marginTop={10}>
+                <FormLabel fontSize="xl">Shorted link: </FormLabel>
+                <Stack marginY={2}>
                   <Link
                     borderWidth="1px"
                     borderRadius="lg"
                     maxW="md"
+                    padding={4}
                     href={shortLink}
                     isExternal
                     onClick={() => {
@@ -87,12 +145,12 @@ export function LinksCard() {
                   >
                     {shortLink} <ExternalLinkIcon mx="2px" />
                   </Link>
-                </VStack>
-                <Button onClick={onCopy}>
+                </Stack>
+                <Button onClick={onCopy} fontSize="xl">
                   {hasCopied ? 'Copied!' : 'Copy'}
-                  <i className="fa-regular fa-copy" />
+                  <CopyIcon marginLeft={2} />
                 </Button>
-              </Box>
+              </FormControl>
             )}
           </Box>
           <LinkDrawer />
@@ -100,13 +158,24 @@ export function LinksCard() {
       </GridItem>
 
       <GridItem
-        colStart={2}
-        rowStart={2}
+        gridArea="Icon"
+        display={{ base: 'none', md: 'none', lg: 'flex' }}
+        justifyContent="center"
+        alignItems="end"
+      >
+        <Box p={16} borderColor="#ffffff5e" borderWidth={12} borderRadius="50%">
+          <LinkIcon boxSize={300} color="#ffffff5e" />
+        </Box>
+      </GridItem>
+
+      <GridItem
+        gridArea="Robot"
         display="flex"
         justifyContent="center"
         alignItems="center"
+        boxSize={{ base: '200px', md: '400px', lg: '400px' }}
       >
-        <Image src={RobotImg} alt="Cute robot" boxSize="400px" margin={10} align="right" />
+        <Image src={RobotImg} alt="Cute robot" margin={10} align="right" />
       </GridItem>
     </Grid>
   );
