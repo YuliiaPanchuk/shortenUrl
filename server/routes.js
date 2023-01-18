@@ -3,7 +3,7 @@ const app = express();
 const { Links } = require('./models/LinksSchema');
 const { v4: uuidv4 } = require('uuid');
 
-const baseUrl = `${process.env.REACT_APP_API_HOST}`; // environment variable
+const baseUrl = `${process.env.REACT_APP_API_HOST}`;
 
 function dateTime(date = new Date()) {
   const pad = function (num) {
@@ -61,7 +61,6 @@ app.post('/shorten_url', async (request, response) => {
 app.get('/links', async (_request, response) => {
   const links = await Links.find();
 
-  // check if the the input field is empty
   if (links.length === 0) {
     response.status(200).json({
       result: [],

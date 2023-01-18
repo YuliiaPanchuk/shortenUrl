@@ -42,7 +42,7 @@ describe('Links', () => {
         .request(server)
         .post('/shorten_url')
         .send(links)
-        .end((error, response) => {
+        .end((_error, response) => {
           response.should.have.status(400);
           response.body.should.be.a('object');
           response.body.should.have.property('error').eql('Input cannot be empty');
@@ -56,7 +56,7 @@ describe('Links', () => {
       let links = new Links({
         _id: '5991531a-5173-4fa8-8d1f-448339bdb267',
         long_url: 'google.com',
-        short_url: 'http://localhost:3001/r/5991531a-5173-4fa8-8d1f-448339bdb267',
+        short_url: `${process.env.REACT_APP_API_HOST}/r/5991531a-5173-4fa8-8d1f-448339bdb267`,
         created_at: '1/15/2023, 8:26:23 AM',
         clicked: 1,
       });

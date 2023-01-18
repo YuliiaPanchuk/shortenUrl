@@ -64,15 +64,9 @@ export function LinksCard() {
     return !!urlPattern.test(urlString);
   };
 
-  function validateUrl() {
-    if (!isValidUrl(longLink)) {
-      alert('Please provide valid link');
-    }
-  }
-
   return (
     <Grid
-      h="100vh"
+      h={{ base: '80vh', md: '100vh' }}
       templateAreas={{
         base: "'Form' 'Robot'",
         md: "'Form Icon' '. Robot'",
@@ -86,11 +80,12 @@ export function LinksCard() {
         md: 'repeat(2, 1fr)',
       }}
       alignItems="center"
+      justifyContent="center"
       justifyItems="center"
       background="linear-gradient(345deg,#ffffff 0%,#ffffff calc(50% - 1px), #008996 calc(50% + 1px), #008996 100%)"
     >
-      <GridItem gridArea="Form" display="flex" justifyContent="center">
-        <Flex justify="center" align="center" flexDirection="column" minWidth="md">
+      <GridItem gridArea="Form" display="flex" justifyContent="center" marginTop={{ base: '30px' }}>
+        <Flex justify="center" align="center" flexDirection="column" minWidth="xs">
           <Box
             paddingX={10}
             paddingY={6}
