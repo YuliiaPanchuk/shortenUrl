@@ -103,9 +103,9 @@ export function LinksCard() {
             <FormControl isInvalid={!isValidUrl(longLink)}>
               <FormLabel fontSize="xl">Enter a long url</FormLabel>
               <Input
+                variant="outline"
                 type="text"
                 size="md"
-                variant="outline"
                 placeholder="http://url.com"
                 value={longLink}
                 onChange={(e) => setLongLink(e.target.value)}
@@ -120,7 +120,7 @@ export function LinksCard() {
               <Button
                 colorScheme="blue"
                 onClick={createShortLink}
-                size="lg"
+                size="md"
                 marginTop={2}
                 isDisabled={isValidUrl(longLink) ? false : true}
               >
