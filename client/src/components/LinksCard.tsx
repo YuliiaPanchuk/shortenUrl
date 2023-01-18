@@ -85,7 +85,7 @@ export function LinksCard() {
       background="linear-gradient(345deg,#ffffff 0%,#ffffff calc(50% - 1px), #008996 calc(50% + 1px), #008996 100%)"
     >
       <GridItem gridArea="Form" display="flex" justifyContent="center" marginTop={{ base: '30px' }}>
-        <Flex justify="center" align="center" flexDirection="column" minWidth="xs">
+        <Flex justify="center" align="center" flexDirection="column" width={{ base: 'xs' }}>
           <Box
             paddingX={10}
             paddingY={6}
@@ -96,7 +96,7 @@ export function LinksCard() {
             backgroundColor="white"
           >
             <FormControl isInvalid={!isValidUrl(longLink)}>
-              <FormLabel fontSize="xl">Enter a long url</FormLabel>
+              <FormLabel fontSize={{ base: 'sm', md: 'lg' }}>Enter a long url</FormLabel>
               <Input
                 variant="outline"
                 type="text"
@@ -105,16 +105,12 @@ export function LinksCard() {
                 value={longLink}
                 onChange={(e) => setLongLink(e.target.value)}
               />
-              {isValidUrl(longLink) ? (
-                <FormHelperText>Enter long url</FormHelperText>
-              ) : (
-                <FormErrorMessage>Please enter valid url</FormErrorMessage>
-              )}
+              {isValidUrl(longLink) || <FormErrorMessage>Please enter valid url</FormErrorMessage>}
 
               <Button
                 colorScheme="blue"
                 onClick={createShortLink}
-                size="md"
+                size={{ base: 'sm', md: 'md' }}
                 marginTop={2}
                 isDisabled={isValidUrl(longLink) ? false : true}
               >
@@ -124,7 +120,7 @@ export function LinksCard() {
 
             {Boolean(shortLink) && (
               <FormControl marginTop={10}>
-                <FormLabel fontSize="xl">Shorted link: </FormLabel>
+                <FormLabel fontSize={{ base: 'sm', md: 'lg' }}>Shorten link: </FormLabel>
                 <Stack marginY={2}>
                   <Link
                     borderWidth="1px"
@@ -140,7 +136,7 @@ export function LinksCard() {
                     {shortLink} <ExternalLinkIcon mx="2px" />
                   </Link>
                 </Stack>
-                <Button onClick={onCopy} fontSize="xl">
+                <Button onClick={onCopy} fontSize={{ base: 'sm', md: 'md' }}>
                   {hasCopied ? 'Copied!' : 'Copy'}
                   <CopyIcon marginLeft={2} />
                 </Button>
