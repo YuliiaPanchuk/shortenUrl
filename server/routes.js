@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const { Links } = require('./models/LinksSchema');
-const { v4: uuidv4 } = require('uuid');
+// const { v4: uuidv4 } = require('uuid');
+const shortId = require('short-uuid');
 
 const baseUrl = `${process.env.REACT_APP_API_HOST}`;
 
@@ -40,7 +41,7 @@ app.post('/shorten_url', async (request, response) => {
     // Create record
     const result = await Links.create({
       long_url,
-      _id: uuidv4(),
+      _id: shortId.generate(),
       created_at: dateTime(),
     });
 
